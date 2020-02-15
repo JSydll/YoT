@@ -1,16 +1,22 @@
 #!/bin/bash
+export PROJECT_ROOT="$PWD";
 
-[[ ! -d "poky" ]] && echo "Error: Please execute this script from root directory of this repo!" && exit;
+source $PROJECT_ROOT/scripts/exports.sh
+[[ ! -d "poky" ]] && echo_red "Error: Please execute this script from root directory of this repo!" && exit;
 
-cd poky;
-# Create the build tree
-source oe-init-build-env; # Ends up in poky/build
+echo_orange "### Minimal Yocto build for Raspberry 3 ###"
 
-echo "Copying raspberry pi specific config files..."
-cp -f ../../conf/*.conf conf;
+# Setting up yocto build environment
+source $PROJECT_ROOT/poky/oe-init-build-env; # creates and cds into /build
+echo 
+source $PROJECT_ROOT/scripts/configure.sh
+
+echo_orange "### Starting minimal build ###"
+bitbake core-image-base
 echo
-
-echo "Starting minimal build.."
-bitbake rpi-basic-image
-echo
-echo "Building done."
+if [ $? -eq 0 ]
+then
+  echo_green "### Building done. ###"
+else
+  echo_red "### Building failed! ###"
+fi
