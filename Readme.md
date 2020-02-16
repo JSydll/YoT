@@ -1,4 +1,10 @@
-# Yasbi: Yocto-driven Raspberry Pi
+# Yasbi: Yocto-driven Raspberry Pi 3
+
+## Required functionalities
+- Basic, headless image
+- Security features enabled by default
+- Ssh-able image without runtime configuration
+- Wifi-enabled image without runtime configuration
 
 ## Infrastructure and dependencies
 
@@ -11,6 +17,16 @@ To have the possibility to easily get the latest changes from the repositories t
 - meta-raspberrypi:
   - Repo: https://git.yoctoproject.org/git/meta-raspberrypi
   - Branch: zeus 
+  - Dependencies: meta-oe, meta-multimedia, meta-networking, meta-python
+- meta-swupdate: 
+  - Repo: https://github.com/sbabic/meta-swupdate 
+  - Branch: zeus
+  - Dependencies: openembedded-core, meta-oe
+- meta-security:
+  - Repo: https://git.yoctoproject.org/git/meta-security
+  - Branch: zeus
+  - Dependencies: meta-oe, meta-networking, meta-python, meta-perl
+
 
 ## Setup
 
