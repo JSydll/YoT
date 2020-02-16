@@ -16,18 +16,14 @@ To have the possibility to easily get the latest changes from the repositories t
 - yocto/poky: 
   - Repo: https://git.yoctoproject.org/git/poky
   - Branch: zeus
-- openembedded-code:
-  - Repo: https://git.openembedded.org/openembedded-core
-  - Branch: zeus 
-  - Dependencies: -
 - meta-openembedded:
   - Repo: https://git.openembedded.org/meta-openembedded
   - Branch: zeus 
-  - Dependencies: openembedded-core
+  - Dependencies: core
 - meta-swupdate: 
   - Repo: https://github.com/sbabic/meta-swupdate 
   - Branch: zeus
-  - Dependencies: openembedded-core, meta-oe
+  - Dependencies: core, meta-oe
 - meta-security:
   - Repo: https://git.yoctoproject.org/git/meta-security
   - Branch: zeus
