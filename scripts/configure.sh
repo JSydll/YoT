@@ -4,8 +4,9 @@
 
 echo_orange "### Custom configuration ###"
 
-echo "- Copying raspberry pi specific config files..."
-cp -f $PROJECT_ROOT/conf/*.conf $PROJECT_ROOT/build/conf; 
+echo "- Copying global Yocto config files..."
+cp -f $PROJECT_ROOT/conf/bblayers.conf $PROJECT_ROOT/build/conf; 
+cp -f $PROJECT_ROOT/conf/local.conf $PROJECT_ROOT/build/conf; 
 
 echo "- Setting default user and access configuration..."
 echo "- Set custom ones by exporting them or prepending the build command with them. "
