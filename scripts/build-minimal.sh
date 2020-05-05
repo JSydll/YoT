@@ -2,7 +2,7 @@
 export PROJECT_ROOT="$PWD";
 export BB_ENV_EXTRAWHITE="$BB_ENV_EXTRAWHITE PROJECT_ROOT" 
 
-source $PROJECT_ROOT/scripts/exports.sh
+source $PROJECT_ROOT/scripts/script-utils.sh
 [[ ! -d "poky" ]] && echo_red "Error: Please execute this script from root directory of this repo!" && exit;
 
 echo_orange "### Minimal Yocto build for Raspberry 3 ###"
@@ -14,7 +14,7 @@ source $PROJECT_ROOT/scripts/configure.sh
 
 echo_orange "### Starting minimal build ###"
 bitbake core-image-base
-echo
+echo 
 if [ $? -eq 0 ]
 then
   echo_green "### Building done. ###"
