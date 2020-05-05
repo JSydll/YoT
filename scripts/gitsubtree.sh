@@ -1,6 +1,6 @@
 #!/bin/bash
 # ------------------------
-# This script provides project specific git subtree utilities
+# Convenience functions for interacting with git subtree
 #
 # - Listing all subtree folders
 # - Pulling all subtree repos
