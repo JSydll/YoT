@@ -8,3 +8,11 @@ There are three possible configurations:
   - w/ static IP
   - using DCHP
 - Access point mode (target provides a wifi network to connect to)
+
+# Necessary configuration steps
+
+- Adding wifi capabilities to the rootfs (in `local.conf`)
+- Appending to the `systemd` configuration for general network adapter setup:
+  - Supplying proper `network` unit files for `systemd` for all supported interfaces
+  - Setting DHCP or static IP
+- Appending to the `wpa-supplicant` configuration for wifi connections

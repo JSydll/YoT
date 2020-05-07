@@ -2,6 +2,7 @@
 # ------------------------
 # Builds the minimal image
 # ------------------------
+export PROJECT_ROOT="$PWD";
 source $PROJECT_ROOT/scripts/init.sh &> /dev/null
 
 echo_orange "### Minimal Yocto build for Raspberry 3 ###"
