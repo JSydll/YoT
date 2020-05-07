@@ -41,8 +41,16 @@ if [[ -f "$PROJECT_ROOT/config.yml" ]]; then
     done
     echo "-- Custom configuration found: "
     echo "    ${envars[@]}"
+    echo 
+
+    if [[ -z "$USERS_ROOT_PWD" ]]; then
+        echo_orange "No root password supplied - generating one..."
+        export USERS_ROOT_PWD=$(openssl rand -hex 16)
+        export BB_ENV_EXTRAWHITE="$BB_ENV_EXTRAWHITE USERS_ROOT_PWD"
+        echo_green "Generated password (please save, will not be stored): $USERS_ROOT_PWD"
+        echo 
+    fi
 fi
-echo 
 
 CONF_DIR="$PROJECT_ROOT/conf"
 

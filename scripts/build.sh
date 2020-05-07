@@ -10,7 +10,8 @@ echo
 source $PROJECT_ROOT/scripts/configure.sh
 
 echo_orange "### Starting minimal build ###"
-bitbake core-image-base "$@"
+#bitbake core-image-base "$@"
+bitbake foundation-image "$@"
 echo 
 if [[ $? -eq 0 ]]; then 
     echo_green "### Building done. ###"

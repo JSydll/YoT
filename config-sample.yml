@@ -12,8 +12,8 @@ users:
   root:
     pwd: "yasbi"
   add:
-    user: "devops"
-    pwd:  "simpleAccess"
+    users: "devops"
+    pwds:  "simpleAccess"
 
 ## Features
 #net:
