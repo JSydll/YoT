@@ -1,0 +1,29 @@
+# ------------------------
+# Sample environment file for supported customizations
+# - automatically read by `scripts/configure.sh`
+# - comments will be ignored
+# 
+# A few notes on NAMING:
+# - hierarchy will be flattened (each level separated by underscore)
+# - resulting environment variables are in uppercase
+# ------------------------
+## System users
+users:
+  root:
+    pwd: "yasbi"
+  add:
+    user: "devops"
+    pwd:  "simpleAccess"
+
+## Features
+#net:
+#  static_ip_v4: ""
+#  static_ip_v6: ""
+#  dns_server: ""
+wifi:
+  enabled: 1
+  mode: "client"
+  ssid: "yasbinet"
+  pwd: "fortytwo"
+bt:
+  enabled: 1

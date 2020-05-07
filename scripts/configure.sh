@@ -24,15 +24,16 @@ write_conf() {
 
 echo_orange "### Custom configuration ###"
 
-echo "You can customize the configuration by providing a .env file in the root folder. \
+echo "You can customize the configuration by providing a config.yml file in the root folder. \
 It will be automatically loaded and all variables in it exported to the build environment."
 echo "For available options check out the layer desciptions. The only top level option set here \
 is the TARGET_MACHINE, selecting the hardware specific configurations (defaults to 'raspberrypi3')."
 echo 
 
 # Try to locate .env script, export the variables and forward them to bitbake.
-if [[ -f "$PROJECT_ROOT/.env" ]]; then 
-    envars=($(grep -v '^#' $PROJECT_ROOT/.env | xargs)) 
+if [[ -f "$PROJECT_ROOT/config.yml" ]]; then 
+
+    envars=($(parse_yaml $PROJECT_ROOT/config.yml)) 
     for pair in "${envars[@]}"; do
         export "$pair"
         kv=(${pair//=/ })
