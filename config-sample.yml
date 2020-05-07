@@ -17,8 +17,8 @@ users:
 
 ## Features
 #net:
-#  static_ip_v4: ""
-#  static_ip_v6: ""
+# Only supports ipv4 currently
+#  static_ip: ""
 #  dns_server: ""
 wifi:
   enabled: 1

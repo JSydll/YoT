@@ -6,8 +6,5 @@ KernelCommandLine=!nfsroot
 DHCP=%%DHCP_MODE%%
 DNS=%%DNS_SERVER%%
 
-%%IP_V4%%Address=%%STATIC_IP_V4%%/24
-%%IP_V4%%Gateway=%%GATEWAY_IP_V4%%
-
-%%IP_V6%%Address=%%STATIC_IP_V6%%/24
-%%IP_V6%%Gateway=%%GATEWAY_IP_V6%%
+%%STATIC%%Address=%%STATIC_IP%%/24
+%%STATIC%%Gateway=%%GATEWAY_IP%%

@@ -47,6 +47,8 @@ Among these are:
 
 ## To dos
 - Enable build-time configuration of wifi
+- Debug image
+- Keyboard layout
 - Enable build-time configuration of ssh (ports, etc)
 - Configure swupdate layer
 - Configure security layer
