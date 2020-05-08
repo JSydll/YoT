@@ -16,3 +16,7 @@ There are three possible configurations:
   - Supplying proper `network` unit files for `systemd` for all supported interfaces
   - Setting DHCP or static IP
 - Appending to the `wpa-supplicant` configuration for wifi connections
+
+# Problems that might occur
+
+- [`rfkill list` indicates wifi is soft-blocked](https://askubuntu.com/questions/673950/i-have-to-issue-rfkill-unblock-wifi-at-every-boot)

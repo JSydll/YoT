@@ -46,7 +46,8 @@ Among these are:
 
 
 ## To dos
-- Support disabling of functionality
+- Support disabling of functionalities (on the layer/recipes levels)
+- Wifi AP mode
 - Hostname
 - Debug image
 - Keyboard layout
