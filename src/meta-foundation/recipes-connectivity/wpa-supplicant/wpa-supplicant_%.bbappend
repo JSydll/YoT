@@ -26,7 +26,6 @@ python do_patch_append() {
     preplace_do_replace(d.getVar('TEMPLATE_FILE', True), params)
 }
 
-
 do_install_append () {
     install -d ${D}${sysconfdir}/wpa_supplicant/
     install -D -m 600 ${WORKDIR}/wpa_supplicant-nl80211-wlan0.conf ${D}${sysconfdir}/wpa_supplicant/

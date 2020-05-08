@@ -22,8 +22,9 @@ users:
   root:
     pwd: "yasbi"
   add:
-    users: "devops"
-    pwds:  "simpleAccess"
+    # Specify one or more additional users here (separate by semicolon)
+    users: "userone;usertwo"
+    pwds:  "useronepw;usertwopw"
 
 ## Features
 #net:
