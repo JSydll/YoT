@@ -22,6 +22,12 @@ The base functionality is usually provided by the core poky layers.
 - Tasks can only be implemented as shell or Bitbake-style functions
 
 
+## Debugging
+
+- Run `bitbake -e <command>` to get the environment dumped and `grep` for variables there
+- Check the `${WORKDIR}/temp` directory for log files (exists for all performed recipes/tasks)
+
+
 ## Existing layers (for future extensions)
 
 - https://layers.openembedded.org/layerindex/branch/master/layer/meta-docker/

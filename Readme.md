@@ -46,9 +46,11 @@ Among these are:
 
 
 ## To dos
-- Enable build-time configuration of wifi
+- Support disabling of functionality
+- Hostname
 - Debug image
 - Keyboard layout
+- Overlay fs w/ data partition filling whole space
 - Enable build-time configuration of ssh (ports, etc)
 - Configure swupdate layer
 - Configure security layer
