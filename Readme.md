@@ -48,9 +48,7 @@ Among these are:
 ## To dos
 - Support disabling of functionalities (on the layer/recipes levels)
 - Wifi AP mode
-- Hostname
 - Debug image
-- Keyboard layout
 - Overlay fs w/ data partition filling whole space
 - Enable build-time configuration of ssh (ports, etc)
 - Configure swupdate layer

@@ -7,13 +7,20 @@
 # - hierarchy will be flattened (each level separated by underscore)
 # - resulting environment variables are in uppercase
 # ------------------------
+## Target platform settings
+target:
+  machine: "raspberrypi3"
+
+## General settings
+settings:
+  hostname: "yasbi"
+  console:
+    lang: "en"
+
 ## System users
 users:
   root:
     pwd: "yasbi"
-  settings:
-    console:
-      lang: "en"
   add:
     users: "devops"
     pwds:  "simpleAccess"
