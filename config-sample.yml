@@ -11,6 +11,9 @@
 users:
   root:
     pwd: "yasbi"
+  settings:
+    console:
+      lang: "en"
   add:
     users: "devops"
     pwds:  "simpleAccess"

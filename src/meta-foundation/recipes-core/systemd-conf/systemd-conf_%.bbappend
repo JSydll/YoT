@@ -3,11 +3,8 @@
 # -------------------
 
 # Depends on the following custom env vars exported to the yocto build:
-# - STATIC_IP_V4
-# - STATIC_IP_V6
-# - WIFI_ENABLED
-# - WIFI_SSID
-# - WIFI_PWD
+# - NET_STATIC_IP
+# - NET_DNS_SERVER
 
 # The default setting is to use DHCP.
 
@@ -29,7 +26,7 @@ FILES_${PN} += " \
 inherit preplace
 include generate_config.inc
 
-WORK_FILES = "\
+TEMPLATE_FILES = "\
     ${WORKDIR}/en.network \
     ${WORKDIR}/eth.network \
     ${WORKDIR}/wlan.network \
@@ -37,7 +34,7 @@ WORK_FILES = "\
 
 python do_patch_append() {
     params = generate_config(d)
-    files = d.getVar('WORK_FILES', True).split()
+    files = d.getVar('TEMPLATE_FILES', True).split()
     for file in files:
         preplace_do_replace(file, params)
 }

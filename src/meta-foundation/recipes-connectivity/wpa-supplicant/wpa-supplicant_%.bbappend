@@ -1,3 +1,12 @@
+# -------------------
+# Configures the WPA client for wifi connections
+# -------------------
+
+# Depends on the following custom env vars exported to the yocto build:
+# - WIFI_ENABLED
+# - WIFI_SSID
+# - WIFI_PWD
+
 # Configures wifi (with nl-802.11 standard)
 FILESEXTRAPATHS_prepend := "${THISDIR}/files:"
 
@@ -10,11 +19,11 @@ SYSTEMD_SERVICE_${PN}_append = " wpa_supplicant-nl80211@wlan0.service  "
 inherit preplace
 require generate_config.inc
 
-WORK_FILE = "${WORKDIR}/wpa_supplicant-nl80211-wlan0.conf"
+TEMPLATE_FILE = "${WORKDIR}/wpa_supplicant-nl80211-wlan0.conf"
 
 python do_patch_append() {
     params = generate_config(d)
-    preplace_do_replace(d.getVar('WORK_FILE', True), params)
+    preplace_do_replace(d.getVar('TEMPLATE_FILE', True), params)
 }
 
 
