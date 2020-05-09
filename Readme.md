@@ -46,12 +46,15 @@ Among these are:
 
 
 ## To dos
+- Wifi AP mode?
+- Firewall setup (iptables)
+- Enable build-time configuration of ssh
+  - ports
+  - installed pub keys
 - Testing the image
 - Support disabling of functionalities (on the layer/recipes levels)
-- Wifi AP mode
 - Debug image
 - Overlay fs w/ data partition filling whole space
-- Enable build-time configuration of ssh (ports, etc)
 - Configure swupdate layer
 - Configure security layer
 - Create minimal sample application in `meta-application`

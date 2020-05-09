@@ -1,5 +1,5 @@
 # -------------------
-# meta-foundation image
+# meta-foundation production image
 #
 # Mainly extends the core image with new recipes introduced in this layer
 # (appends will be automatically added) and performs global image operations
