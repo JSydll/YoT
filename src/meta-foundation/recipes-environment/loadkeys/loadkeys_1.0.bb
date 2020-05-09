@@ -29,7 +29,7 @@ inherit preplace
 TEMPLATE_FILE = "${WORKDIR}/loadkeys.service"
 
 python do_patch_append() {
-    preplace_do_replace(d.getVar('TEMPLATE_FILE', True), { "LANG" : d.getVar('SETTINGS_CONSOLE_LANG', True) })
+    preplace_execute(d.getVar('TEMPLATE_FILE', True), { "LANG" : d.getVar('SETTINGS_CONSOLE_LANG', True) })
 }
 
 do_install () {

@@ -1,5 +1,5 @@
 # -------------------
-# Provides a patch function source files and replacing parameters in it
+# Methods to modify templated files
 # -------------------
 
 # -------------------
@@ -12,7 +12,7 @@
 # @param prepostfix unique character set used to prefix and postfix parameter 
 # names in the template file.
 # -------------------
-def preplace_do_replace(path, params, prepostfix = "%%"):
+def preplace_execute(path, params, prepostfix = "%%"):
     import fileinput
     import sys
     for line in fileinput.input(path, inplace=True):
@@ -21,4 +21,4 @@ def preplace_do_replace(path, params, prepostfix = "%%"):
             out = out.replace(prepostfix + k + prepostfix, str(v))
         sys.stdout.write(out)
 
-EXPORT_FUNCTIONS preplace_do_replace
+EXPORT_FUNCTIONS execute

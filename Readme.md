@@ -46,6 +46,7 @@ Among these are:
 
 
 ## To dos
+- Testing the image
 - Support disabling of functionalities (on the layer/recipes levels)
 - Wifi AP mode
 - Debug image

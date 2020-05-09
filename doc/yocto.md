@@ -45,3 +45,8 @@ The base functionality is usually provided by the core poky layers.
 - https://github.com/sbabic/meta-swupdate-boards/tree/master/
 - https://layers.openembedded.org/layerindex/branch/master/layer/meta-encrypted-storage/
 - https://layers.openembedded.org/layerindex/branch/master/layer/meta-selinux/
+
+## Special insights
+
+- Adding users/groups is significantly easier on the image level (with extrausers.bbclass) as 
+  compared to moving that into a separate recipe (with useradd.bbclass)

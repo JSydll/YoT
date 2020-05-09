@@ -36,7 +36,7 @@ python do_patch_append() {
     params = generate_config(d)
     files = d.getVar('TEMPLATE_FILES', True).split()
     for file in files:
-        preplace_do_replace(file, params)
+        preplace_execute(file, params)
 }
 
 do_install_append() {

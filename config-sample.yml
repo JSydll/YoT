@@ -17,14 +17,18 @@ settings:
   console:
     lang: "en"
 
-## System users
+## System users & groups
+groups:
+  add:
+    names: "grpone"
 users:
   root:
     pwd: "yasbi"
   add:
     # Specify one or more additional users here (separate by semicolon)
-    users: "userone;usertwo"
-    pwds:  "useronepw;usertwopw"
+    users:  "userone;usertwo;userthree"
+    pwds:   "useronepw;usertwopw;userthreepw"
+    groups: "sudo;grpone;"
 
 ## Features
 #net:

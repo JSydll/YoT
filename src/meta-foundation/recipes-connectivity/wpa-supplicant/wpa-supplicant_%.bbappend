@@ -23,7 +23,7 @@ TEMPLATE_FILE = "${WORKDIR}/wpa_supplicant-nl80211-wlan0.conf"
 
 python do_patch_append() {
     params = generate_config(d)
-    preplace_do_replace(d.getVar('TEMPLATE_FILE', True), params)
+    preplace_execute(d.getVar('TEMPLATE_FILE', True), params)
 }
 
 do_install_append () {
