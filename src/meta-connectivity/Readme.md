@@ -1,4 +1,4 @@
-# meta-foundation layer
+# meta-connectivity layer
 
 # Overview of functionality
 

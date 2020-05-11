@@ -1,11 +1,11 @@
 # -------------------
-# meta-foundation production image
+# meta-userenv production image
 #
 # Mainly extends the core image with new recipes introduced in this layer
 # (appends will be automatically added) and performs global image operations
 # -------------------
-SUMMARY = "Foundation image built on top of the core-image-minimal \
-with additional features provided in the meta-foundation layer"
+SUMMARY = "Minimal image built on top of the core-image-minimal \
+with additional features provided in the meta-userenv layer"
 
 IMAGE_LINGUAS = " "
 

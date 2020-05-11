@@ -41,8 +41,8 @@ Aside from collecting the required layers and configuring them, this projects ad
 scripts to configure the images as well as some custom layers with additional functionality. 
 Among these are:
 
-- `meta-foundation` with some foundational features like compile-time wifi configuration
-- `meta-application` providing a wrapper for a CMake-based application built and deployed in the image
+- `meta-connectivity` with some foundational features like compile-time wifi configuration
+- `meta-cmakeapp` providing a wrapper for a CMake-based application built and deployed in the image
 
 
 ## To dos
@@ -57,4 +57,4 @@ Among these are:
 - Overlay fs w/ data partition filling whole space
 - Configure swupdate layer
 - Configure security layer
-- Create minimal sample application in `meta-application`
+- Create minimal sample application in `meta-cmakeapp`
