@@ -9,19 +9,23 @@
 [[ -z "$PROJECT_ROOT" ]] && echo_red "Error: Environment variable PROJECT_ROOT not set." && exit;
 [[ -z "$BBPATH" ]] && echo_red "Error: Yocto build environment not initialized (oe-init-build-env should be called before)." && exit;
 
-# Configuration source path
-CONF="$PROJECT_ROOT/conf"
-
 # ------------------------
 # Writes the content of one or more config files ($1) into the build config file ($2)
 # Appends to the file if $3 is provided and true.
 # Does not perform any checks and is meant for use here only.
 # ------------------------
 write_conf() {
+    srcs=""
+    params=($1)
+    # Enable several source configuration files to be passed in
+    # and prepend the config folder
+    for src in "${params[@]}"; do
+        srcs="$srcs $PROJECT_ROOT/conf/$src"
+    done
     if [[ -z "$3" || "$3" = false ]]; then
-        cat $CONF/$1 > $PROJECT_ROOT/build/conf/$2
+        cat $srcs > $PROJECT_ROOT/build/conf/$2
     else
-        cat $CONF/$1 >> $PROJECT_ROOT/build/conf/$2     
+        cat $srcs >> $PROJECT_ROOT/build/conf/$2     
     fi
 }
 
@@ -55,6 +59,9 @@ if [[ -f "$PROJECT_ROOT/config.yml" ]]; then
     fi
 fi
 
+# Configuration source path
+CONF="$PROJECT_ROOT/conf"
+
 # Make sure, the target machine configuration can be found
 if [[ ! -d "$CONF/targets/$TARGET_MACHINE/" \
       || ! -f "$CONF/targets/$TARGET_MACHINE/machine.conf" \
@@ -66,9 +73,7 @@ echo "Generating Yocto config files in the build tree..."
 
 # Basic config
 write_conf "bblayers.conf" "bblayers.conf"
-write_conf "features/build.conf" "local.conf"
-write_conf "features/system.conf" "local.conf"
-write_conf "features/base.conf" "local.conf"
+write_conf "features/build.conf features/system.conf features/base.conf" "local.conf"
 
 # Adjustments according to imported configuration
 write_conf "targets/$TARGET_MACHINE/bblayers.append.conf" "bblayers.conf" true

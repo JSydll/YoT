@@ -40,5 +40,6 @@ python do_patch_append() {
 }
 
 do_install_append () {
-    install -D -p -m 0644 ${WORKDIR}/app-autostart.service ${D}${systemd_unitdir}/system/${APP_CMAKE_EXECUTABLE}.service
+    install -d ${D}${sysconfdir}/systemd/system
+    install -D -m 0644 ${WORKDIR}/app-autostart.service ${D}${sysconfdir}/systemd/system/${APP_CMAKE_EXECUTABLE}.service
 }
