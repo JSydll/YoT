@@ -3,7 +3,7 @@
 # -------------------
 
 # Depends on the following custom env vars exported to the yocto build:
-# - SETTINGS_CONSOLE_LANG
+# - ENV_CONSOLE_LANG
 
 DESCRIPTION = "Setup a specific keyboard-layout for the console"
 
@@ -29,7 +29,7 @@ inherit preplace
 TEMPLATE_FILE = "${WORKDIR}/loadkeys.service"
 
 python do_patch_append() {
-    preplace_execute(d.getVar('TEMPLATE_FILE', True), { "LANG" : d.getVar('SETTINGS_CONSOLE_LANG', True) })
+    preplace_execute(d.getVar('TEMPLATE_FILE', True), { "LANG" : d.getVar('ENV_CONSOLE_LANG', True) })
 }
 
 do_install () {

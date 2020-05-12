@@ -3,6 +3,6 @@
 # -------------------
 
 # Depends on the following custom env vars exported to the yocto build:
-# - SETTINGS_HOSTNAME
+# - ENV_HOSTNAME
 
-hostname="${SETTINGS_HOSTNAME}"
+hostname="${ENV_HOSTNAME}"

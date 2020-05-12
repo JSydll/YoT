@@ -15,6 +15,10 @@ echo
 source $PROJECT_ROOT/scripts/configure.sh
 
 echo_orange "### Starting minimal build ###"
+# Use core-image-minimal if nothing is provided
+if [[ -z "$PARAMS" ]]; then 
+    PARAMS="core-image-minimal"
+fi
 eval $(echo "bitbake $PARAMS")
 echo 
 if [[ $? -eq 0 ]]; then 

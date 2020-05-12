@@ -9,6 +9,9 @@
 [[ -z "$PROJECT_ROOT" ]] && echo_red "Error: Environment variable PROJECT_ROOT not set." && exit;
 [[ -z "$BBPATH" ]] && echo_red "Error: Yocto build environment not initialized (oe-init-build-env should be called before)." && exit;
 
+# Configuration source path
+CONF="$PROJECT_ROOT/conf"
+
 # ------------------------
 # Writes the content of one or more config files ($1) into the build config file ($2)
 # Appends to the file if $3 is provided and true.
@@ -16,9 +19,9 @@
 # ------------------------
 write_conf() {
     if [[ -z "$3" || "$3" = false ]]; then
-        cat $1 > $PROJECT_ROOT/build/conf/$2
+        cat $CONF/$1 > $PROJECT_ROOT/build/conf/$2
     else
-        cat $1 >> $PROJECT_ROOT/build/conf/$2     
+        cat $CONF/$1 >> $PROJECT_ROOT/build/conf/$2     
     fi
 }
 
@@ -52,32 +55,45 @@ if [[ -f "$PROJECT_ROOT/config.yml" ]]; then
     fi
 fi
 
-CONF_DIR="$PROJECT_ROOT/conf"
-
 # Make sure, the target machine configuration can be found
-if [[ ! -d "$CONF_DIR/$TARGET_MACHINE/" \
-      || ! -f "$CONF_DIR/$TARGET_MACHINE/machine.conf" \
-      || ! -f "$CONF_DIR/$TARGET_MACHINE/bblayers.append.conf" ]]; then
+if [[ ! -d "$CONF/targets/$TARGET_MACHINE/" \
+      || ! -f "$CONF/targets/$TARGET_MACHINE/machine.conf" \
+      || ! -f "$CONF/targets/$TARGET_MACHINE/bblayers.append.conf" ]]; then
     echo_red "Error: Could not find machine.conf or bblayers.append.conf for the specified target. Aborting build." && exit
 fi
 
 echo "Generating Yocto config files in the build tree..."
 
-write_conf "$CONF_DIR/bblayers.conf" "bblayers.conf"
-write_conf "$CONF_DIR/$TARGET_MACHINE/bblayers.append.conf" "bblayers.conf" true
+# Basic config
+write_conf "bblayers.conf" "bblayers.conf"
+write_conf "features/build.conf" "local.conf"
+write_conf "features/system.conf" "local.conf"
+write_conf "features/base.conf" "local.conf"
 
-write_conf "$CONF_DIR/common/build.conf \
-            $CONF_DIR/common/system.conf \
-            $CONF_DIR/common/features/base.conf" "local.conf"
+# Adjustments according to imported configuration
+write_conf "targets/$TARGET_MACHINE/bblayers.append.conf" "bblayers.conf" true
+write_conf "targets/$TARGET_MACHINE/machine.conf" "local.conf" true 
 
-# By default, try to enable all available features and let layers decide how to implement them
-write_conf "$CONF_DIR/common/features/wifi.conf" "local.conf" true
-if [[ -f "$CONF_DIR/$TARGET_MACHINE/features/wifi.append.conf" ]]; then 
-    write_conf "$CONF_DIR/$TARGET_MACHINE/features/wifi.append.conf" "local.conf" true
+if [[ "$DEBUG" = "1" ]]; then
+    write_conf "features/debug.conf" "local.conf" true
 fi
-write_conf "$CONF_DIR/common/features/bluetooth.conf" "local.conf" true
 
-write_conf "$CONF_DIR/$TARGET_MACHINE/machine.conf" "local.conf" true 
+if [[ "$WIFI_ENABLED" = "1" || "$BT_ENABLED" = "1" ]]; then
+    write_conf "layers/connectivity.conf" "bblayers.conf" true
+
+    write_conf "features/wifi.conf" "local.conf" true
+    write_conf "features/bluetooth.conf" "local.conf" true
+    if [[ -f "$CONF/$TARGET_MACHINE/features/wifi.append.conf" ]]; then 
+        write_conf "$TARGET_MACHINE/features/wifi.append.conf" "local.conf" true
+    fi
+fi
+
+write_conf "features/userenv.conf" "local.conf" true
+
+if [[ -n "$APP_CMAKE_URL" ]]; then
+    write_conf "layers/cmakeapp.conf" "bblayers.conf" true
+    write_conf "features/cmakeapp.conf" "local.conf" true
+fi
 
 echo 
 echo_green "### Custom configuration done. ###"

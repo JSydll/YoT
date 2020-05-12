@@ -1,0 +1,16 @@
+[Unit]
+Description=Autostart service for %%EXECUTABLE%%
+
+[Service]
+User=%%EXEC_USER%%
+Type=exec
+ExecStart=%%PATH%%/%%EXECUTABLE%%
+TimeoutSec=30
+Restart=on-failure
+RestartSec=30
+StartLimitInterval=350
+StartLimitBurst=10
+StandardOutput=null
+
+[Install]
+WantedBy=multi-user.target

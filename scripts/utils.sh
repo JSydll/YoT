@@ -18,7 +18,7 @@ echo_orange() { echo -e "${ORANGE}$1${NC}"; }
 #
 # @param 1 path
 # ------------------------
-function parse_yaml {
+parse_yaml() {
    local s='[[:space:]]*' w='[a-zA-Z0-9_]*' fs=$(echo @|tr @ '\034')
    sed -ne "s|^\($s\):|\1|" \
         -e "s|^\($s\)\($w\)$s:$s[\"']\(.*\)[\"']$s\$|\1$fs\2$fs\3|p" \

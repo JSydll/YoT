@@ -12,7 +12,7 @@ target:
   machine: "raspberrypi3"
 
 ## General settings
-settings:
+env:
   hostname: "yasbi"
   console:
     lang: "en"
@@ -42,3 +42,13 @@ wifi:
   pwd: "fortytwo"
 bt:
   enabled: 1
+
+## Application
+app:
+  cmake:
+    url: "github.com/JSydll/iot-sample-app.git"
+    # tag: ""
+    autoload: 1
+    install_path: "/usr/bin"
+    executable: "iot-sample-app"
+    exec_user: "userone"
