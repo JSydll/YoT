@@ -1,5 +1,13 @@
 # General learnings about Yocto
 
+## Approaches
+
+**Task**: Enable configuration of features that should be available on the target from the outside.
+**Approach**: Configuration happens through environment variables exported into the bitbake environment. 
+Each layer then appends to the IMAGE_INSTALL or DISTRO_FEATURES variables depending on the env vars. 
+*Known caveats*: No specific image is defined and some images may not include all indirect dependencies 
+(e.g. the core-image-minimal cannot host wifi features properly).
+
 ## Basic principles
 
 One of Yocto's key concepts is the separation of functionality/configuration 
