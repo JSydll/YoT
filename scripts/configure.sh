@@ -47,7 +47,7 @@ if [[ -f "$PROJECT_ROOT/config.yml" ]]; then
         export BB_ENV_EXTRAWHITE="$BB_ENV_EXTRAWHITE ${kv[0]}"
     done
     echo "-- Custom configuration found: "
-    echo "    ${envars[@]}"
+    env_pretty_print $envars
     echo 
 
     if [[ -z "$USERS_ROOT_PWD" ]]; then

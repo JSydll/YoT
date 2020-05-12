@@ -33,3 +33,20 @@ parse_yaml() {
       }
    }'
 }
+
+# ------------------------
+# Prints environment variables (and hides passwords)
+#
+# @param 1 array of environment variable pairs in the form of "key=value"
+# ------------------------
+env_pretty_print() {
+   envars=$1
+   for pair in "${envars[@]}"; do
+        kv=(${pair//=/ })
+        if [[ ! "${kv[0]}" =~ "PWD" ]]; then
+            echo "    $pair"
+         else
+            echo "    ${kv[0]}=<password hidden>"
+         fi
+   done
+}
