@@ -63,8 +63,7 @@ fi
 CONF="$PROJECT_ROOT/conf"
 
 # Make sure, the target machine configuration can be found
-if [[ ! -d "$CONF/targets/$TARGET_MACHINE/" \
-      || ! -f "$CONF/targets/$TARGET_MACHINE/machine.conf" \
+if [[ ! -f "$CONF/targets/$TARGET_MACHINE/machine.conf" \
       || ! -f "$CONF/targets/$TARGET_MACHINE/bblayers.append.conf" ]]; then
     echo_red "Error: Could not find machine.conf or bblayers.append.conf for the specified target. Aborting build." && exit
 fi
@@ -73,31 +72,27 @@ echo "Generating Yocto config files in the build tree..."
 
 # Basic config
 write_conf "bblayers.conf" "bblayers.conf"
-write_conf "features/build.conf features/system.conf features/base.conf" "local.conf"
+write_conf "local.conf" "local.conf"
 
-# Adjustments according to imported configuration
+# Target settings
 write_conf "targets/$TARGET_MACHINE/bblayers.append.conf" "bblayers.conf" true
 write_conf "targets/$TARGET_MACHINE/machine.conf" "local.conf" true 
 
+# Adjustments according to imported configuration
+
 if [[ "$DEBUG" = "1" ]]; then
-    write_conf "features/debug.conf" "local.conf" true
+    write_conf "image/debug.conf" "local.conf" true
 fi
 
 if [[ "$WIFI_ENABLED" = "1" || "$BT_ENABLED" = "1" ]]; then
     write_conf "layers/connectivity.conf" "bblayers.conf" true
-
-    write_conf "features/wifi.conf" "local.conf" true
-    write_conf "features/bluetooth.conf" "local.conf" true
-    if [[ -f "$CONF/$TARGET_MACHINE/features/wifi.append.conf" ]]; then 
-        write_conf "$TARGET_MACHINE/features/wifi.append.conf" "local.conf" true
-    fi
 fi
-
-write_conf "features/userenv.conf" "local.conf" true
+if [[ "$WIFI_ENABLED" = "1" && -f "$CONF/targets/$TARGET_MACHINE/wifi.append.conf" ]]; then 
+    write_conf "targets/$TARGET_MACHINE/wifi.append.conf" "local.conf" true
+fi
 
 if [[ -n "$APP_CMAKE_URL" ]]; then
     write_conf "layers/cmakeapp.conf" "bblayers.conf" true
-    write_conf "features/cmakeapp.conf" "local.conf" true
 fi
 
 echo 

@@ -42,6 +42,8 @@ wifi:
   pwd: "fortytwo"
 bt:
   enabled: 1
+ssh:
+  enabled: 1
 
 ## Application
 app:

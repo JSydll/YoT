@@ -47,14 +47,13 @@ Among these are:
 
 ## To dos
 - Wifi AP mode?
+- Remove meta-yocto-bsp?
+- Replace IMAGE_INSTALL_append s in layer.confs with CORE_IMAGE_EXTRA_INSTALL to be safe all packages get deployed (also in minimal image)?
 - Firewall setup (iptables)
+- Overlay fs w/ data partition filling whole space
 - Enable build-time configuration of ssh
   - ports
   - installed pub keys
 - Testing the image
-- Support disabling of functionalities (on the layer/recipes levels)
-- Debug image
-- Overlay fs w/ data partition filling whole space
 - Configure swupdate layer
 - Configure security layer
-- Create minimal sample application in `meta-cmakeapp`
