@@ -92,7 +92,7 @@ if [[ "$WIFI_ENABLED" = "1" && -f "$CONF/targets/$TARGET_MACHINE/wifi.append.con
 fi
 
 if [[ -n "$APP_CMAKE_URL" ]]; then
-    write_conf "layers/cmakeapp.conf" "bblayers.conf" true
+    write_conf "layers/application.conf" "bblayers.conf" true
 fi
 
 echo 

@@ -42,7 +42,7 @@ scripts to configure the images as well as some custom layers with additional fu
 Among these are:
 
 - `meta-connectivity` with some foundational features like compile-time wifi configuration
-- `meta-cmakeapp` providing a wrapper for a CMake-based application built and deployed in the image
+- `meta-application` providing a wrapper for a CMake-based application built and deployed in the image
 
 
 ## To dos
