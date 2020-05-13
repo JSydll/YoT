@@ -7,6 +7,9 @@
 # - hierarchy will be flattened (each level separated by underscore)
 # - resulting environment variables are in uppercase
 # ------------------------
+## Development
+# debug: 1
+
 ## Target platform settings
 target:
   machine: "raspberrypi3"
@@ -16,6 +19,9 @@ env:
   hostname: "yasbi"
   console:
     lang: "en"
+  sudo:
+    enabled: 1
+    nopasswd: 0
 
 ## System users & groups
 groups:

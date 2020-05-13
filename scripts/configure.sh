@@ -63,9 +63,13 @@ fi
 CONF="$PROJECT_ROOT/conf"
 
 # Make sure, the target machine configuration can be found
+NON_DEFAULT_TARGET=0
 if [[ ! -f "$CONF/targets/$TARGET_MACHINE/machine.conf" \
       || ! -f "$CONF/targets/$TARGET_MACHINE/bblayers.append.conf" ]]; then
-    echo_red "Error: Could not find machine.conf or bblayers.append.conf for the specified target. Aborting build." && exit
+    echo_red "Error: Could not find machine.conf or bblayers.append.conf for the specified target."
+    echo_yellow "Assuming a natively supported target and including 'meta-yocto-bsp'..."
+    echo 
+    NON_DEFAULT_TARGET=1
 fi
 
 echo "Generating Yocto config files in the build tree..."
@@ -75,8 +79,12 @@ write_conf "bblayers.conf" "bblayers.conf"
 write_conf "local.conf" "local.conf"
 
 # Target settings
-write_conf "targets/$TARGET_MACHINE/bblayers.append.conf" "bblayers.conf" true
-write_conf "targets/$TARGET_MACHINE/machine.conf" "local.conf" true 
+if [ NON_DEFAULT_TARGET ]; then
+    write_conf "targets/$TARGET_MACHINE/bblayers.append.conf" "bblayers.conf" true
+    write_conf "targets/$TARGET_MACHINE/machine.conf" "local.conf" true 
+else
+    write_conf "targets/default.conf" "bblayers.conf" true
+fi
 
 # Adjustments according to imported configuration
 
