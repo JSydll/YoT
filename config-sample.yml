@@ -8,7 +8,9 @@
 # - resulting environment variables are in uppercase
 # ------------------------
 ## Development
-# debug: 1
+# debug: 
+#  enabled: 1
+#  ssh_root: 1
 
 ## Target platform settings
 target:

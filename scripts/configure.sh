@@ -88,7 +88,7 @@ fi
 
 # Adjustments according to imported configuration
 
-if [[ "$DEBUG" = "1" ]]; then
+if [[ "$DEBUG_ENABLED" = "1" ]]; then
     write_conf "image/debug.conf" "local.conf" true
 fi
 
