@@ -52,6 +52,9 @@ bt:
   enabled: 1
 ssh:
   enabled: 1
+  preinstalled_keys: "userone:/path/to/userone/key.pub"
+  users: "userone"
+  keys: "/path/to/userone/key.pub"
 
 ## Application
 app:

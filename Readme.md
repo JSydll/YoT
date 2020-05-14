@@ -1,7 +1,12 @@
-# Yasbi: Yocto-driven Raspberry Pi 3
+# YoT: Yocto-driven IoT devices
 
-This is an evolving project, aiming at creating a custom distro for the Raspi 3 (and possibly later 
-some more hardware platform) accounting for some usual use cases in connected products / IoT.
+This project aims at creating a custom reference distro for embedded devices (like the Raspi 3 
+and possibly later some more hardware platforms) in the context of connected products / IoT. 
+
+It leverages existing software layers from the Yocto/OpenEmbedded community where possible and 
+extends configurations / default settings where necessary.
+
+The main idea is to have the build 
 
 ## Requirements for the image
 - Basic, headless image
