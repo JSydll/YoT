@@ -10,7 +10,7 @@
 ## Development
 # debug: 
 #  enabled: 1
-#  ssh_root: 1
+#  allow_ssh_root: 1
 
 ## Target platform settings
 target:
@@ -27,16 +27,12 @@ env:
 
 ## System users & groups
 groups:
-  add:
-    names: "grpone"
+  add: "grpone"
 users:
-  root:
-    pwd: "yasbi"
-  add:
-    # Specify one or more additional users here (separate by semicolon)
-    users:  "userone;usertwo;userthree"
-    pwds:   "useronepw;usertwopw;userthreepw"
-    groups: "sudo;grpone;"
+  root_pwd: "yasbi"
+  # Specify one or more additional users here (separate by semicolon)
+  # Each user is specified with name|password|group(s)
+  add: "userone|useronepw|sudo;usertwo|usertwopw|sudo,grpone;userthree|userthreepw"
 
 ## Features
 #net:
@@ -52,9 +48,7 @@ bt:
   enabled: 1
 ssh:
   enabled: 1
-  preinstalled_keys: "userone:/path/to/userone/key.pub"
-  users: "userone"
-  keys: "/path/to/userone/key.pub"
+  preinstalled_keys: "userone|/path/to/userone/key.pub"
 
 ## Application
 app:

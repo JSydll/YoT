@@ -1,12 +1,22 @@
 # YoT: Yocto-driven IoT devices
 
-This project aims at creating a custom reference distro for embedded devices (like the Raspi 3 
+This project aims at creating a custom reference distro for embedded devices (like the Raspberry Pi 3 
 and possibly later some more hardware platforms) in the context of connected products / IoT. 
 
-It leverages existing software layers from the Yocto/OpenEmbedded community where possible and 
-extends configurations / default settings where necessary.
+It leverages existing software layers from the Yocto/OpenEmbedded community whenever possible and 
+then extends their configuration / default settings.
 
-The main idea is to have the build 
+With the provided wrapper scripts around the bitbake and the *YAML*-based configuration file, 
+a user is able to specify the desired setup (e.g. what functionality to include, which settings 
+to default to) *before* running the build in a transparent manner. The layers in `src` then dynamically 
+build the desired configuration depending on environment variables exported into the bitbake execution 
+context.
+
+So far, the implementation is based on the following:
+- one main configuration file (`config.yml`) defining environment variables to export to bitbake
+- *bash*-scripts to generate appropriate build-files (mainly `bblayers.conf` and `local.conf`), to 
+  export the env vars to bitbake and to run the Yocto build
+- 
 
 ## Requirements for the image
 - Basic, headless image

@@ -10,11 +10,9 @@ inherit flatarray
 def get_userkeys(d):
     userkeys = {}
     arr = d.getVar('SSH_PREINSTALLED_KEYS')
-    if (arr == None) or (len(arr) == 0):
-        return userkeys
     pairs = flatarray_parse(arr)
     for pair in pairs:
-        kv = flatarray_parse(pair, ':')
+        kv = flatarray_parse(pair, '|')
         userkeys[kv[0]] = kv[1]
     return userkeys
 
