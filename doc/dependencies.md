@@ -1,8 +1,8 @@
 # Dependencies
 
 To have the possibility to easily get the latest changes from the repositories this repo depends on, 
-`git subtree` is used. This enables easy amendments made to the whole tree without committing to the 
-external repos. [Infos on git subtree](https://www.netways.de/blog/2016/01/14/working-with-git-subtree/)
+`git subtree` is used. This enables amendments made to the whole tree without committing to the 
+external repos. [More info on git subtree here](https://www.netways.de/blog/2016/01/14/working-with-git-subtree/).
 
 To ease up the interaction with the subtrees, a small wrapper script is provided (`scripts/gitsubtree.sh`) 
 which can be `source`d so that the following commands are available:

@@ -18,7 +18,7 @@ target:
 
 ## General settings
 env:
-  hostname: "yasbi"
+  hostname: "yotbox"
   console:
     lang: "en"
   sudo:
@@ -29,7 +29,7 @@ env:
 groups:
   add: "grpone"
 users:
-  root_pwd: "yasbi"
+  root_pwd: "yot"
   # Specify one or more additional users here (separate by semicolon)
   # Each user is specified with name|password|group(s)
   add: "userone|useronepw|sudo;usertwo|usertwopw|sudo,grpone;userthree|userthreepw"
@@ -42,7 +42,7 @@ users:
 wifi:
   enabled: 1
   mode: "client"
-  ssid: "yasbinet"
+  ssid: "yotnet"
   pwd: "fortytwo"
 bt:
   enabled: 1
