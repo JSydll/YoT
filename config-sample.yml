@@ -18,6 +18,9 @@ target:
 
 ## General settings
 env:
+  distro:
+    name: "YoT (Reference Distro)"
+    version: "0.1"
   hostname: "yotbox"
   console:
     lang: "en"
