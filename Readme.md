@@ -49,13 +49,15 @@ A few requirements drove what is currently implemented or planned to be:
 - Developers should be able to debug the system with an extended set of tools / configuration.
 
 
-## Documentation 
+## Project documentation 
 
+- [Overview and insights on Yocto](doc/yocto.md)
 - [Explanation of the repository structure](doc/structure.md)
 - [Software foundation and dependencies](doc/dependencies.md)
 - [Scripts for execution and convenience](doc/scripts.md)
 - [Configuration of the build process and image](doc/configuration.md)
-- [Resources and further reading](doc/resources.md)
+
+Documentation specific to the extension layers in `/src` is located within the layer directories.
 
 
 ## Overview of current features
@@ -63,19 +65,18 @@ A few requirements drove what is currently implemented or planned to be:
 Aside from collecting the required layers and configuring them, this projects adds scripts to configure 
 the images as well as some custom layers with additional functionality. Among these are:
 
-- `meta-common` [doc](src/meta-common/Readme.md)
-  Provides commonly used classes to process the configuration variables and deal with template files.
-- `meta-userenv` [doc](src/meta-userenv/Readme.md)
-  Sets up users, groups and general system settings like hostname or keyboard layout.
-- `meta-connectivity` [doc](src/meta-connectivity/Readme.md)
-  Connectivity related features like compile-time network/wifi configuration or ssh setup.
-- `meta-fota` [doc](src/meta-fota/Readme.md)
-  Adds update related functionalities to the image.
-- `meta-hardening` [doc](src/meta-hardening/Readme.md)
-  Extends/configures the security layer to provide a secure system.
-- `meta-application` [doc](src/meta-application/Readme.md)
-  Provides a wrapper for an external application built and deployed in the image (currently only for a 
-  CMake-based project).
+- `meta-common` ([doc](src/meta-common/Readme.md))
+  *Provides commonly used classes to process the configuration variables and deal with template files.*
+- `meta-userenv` ([doc](src/meta-userenv/Readme.md))
+  *Sets up users, groups and general system settings like hostname or keyboard layout.*
+- `meta-connectivity` ([doc](src/meta-connectivity/Readme.md))
+  *Connectivity related features like compile-time network/wifi configuration or ssh setup.*
+- `meta-fota` ([doc](src/meta-fota/Readme.md))
+  *Adds update related functionalities to the image.*
+- `meta-hardening` ([doc](src/meta-hardening/Readme.md))
+  *Extends/configures the security layer to provide a secure system.*
+- `meta-application` ([doc](src/meta-application/Readme.md))
+  *Provides a wrapper for an external application built and deployed in the image (currently only for a CMake-based project).*
 
 
 ## Installation

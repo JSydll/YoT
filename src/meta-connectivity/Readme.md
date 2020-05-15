@@ -42,3 +42,10 @@ Hints:
 - [`rfkill list` indicates wifi is soft-blocked](https://askubuntu.com/questions/673950/i-have-to-issue-rfkill-unblock-wifi-at-every-boot)
 - There are conflicts between `NetworkManager`, `systemd-networkd` and `hostapd` services 
   ([great explanation on SO here](https://askubuntu.com/posts/1158200/timeline))
+
+## Wifi configuration (on Raspi 3)
+
+- [Tutorial how to configure systemd based networking](https://hub.mender.io/t/how-to-configure-networking-using-systemd-in-yocto-project/1097)
+- [systemd-networkd documentation](https://www.freedesktop.org/software/systemd/man/systemd.network.html)
+- [systemd-networkd network files (examples)](https://wiki.archlinux.org/index.php/Systemd-networkd#network_files)
+- [Some more hints on working with networkd (German)](https://wiki.ubuntuusers.de/systemd/networkd/)

@@ -1,44 +1,89 @@
-# General learnings about Yocto
+# The Yocto Project
 
-## Approaches
+Yocto/OpenEmbedded is one of the most popular frameworks to build custom Linux distributions. 
+While there is lots of documentation out there, the learning curve is quite steep. This project 
+was started to understand the inner workings of bitbake, to be able to actually use its manigfold 
+capabilities but also to know its limitations and pitfalls.
 
-**Task**: Enable configuration of features that should be available on the target from the outside.
+The official documentation can be separated in
+- the complete picture how Yocto works -> [the mega manual](https://www.yoctoproject.org/docs/current/mega-manual/mega-manual.html)
+- how usual development tasks can be solved -> [the dev manual](https://www.yoctoproject.org/docs/latest/dev-manual/dev-manual.html)
+- what's in the box (e.g. classes and tasks descriptions) -> [the reference manual](https://www.yoctoproject.org/docs/current/ref-manual/ref-manual.html)
+- how bitbake works -> [the bitbake user manual](https://www.yoctoproject.org/docs/latest/bitbake-user-manual/bitbake-user-manual.html)
+
+Aside from the above docs (which are quite exhaustive), there are numerous shorter introductions into 
+the Yocto world, e.g. 
+- a [Bitbake beginner's tutorial](https://a4z.bitbucket.io/docs/BitBake/guide.html)
+- the awesome [Mender Project's Yocto tutorials](https://hub.mender.io/c/tutorials/yocto-project/19)
+
+As the Raspberry Pi is a common target for Yocto experiments, there are some guides specific to it:
+- a basic [Instructable to build a Yocto image](https://www.instructables.com/id/Building-GNULinux-Distribution-for-Raspberry-Pi-Us/)
+- a Raspberry Pi [fork/extension of the meta-raspberrypi layer](https://jumpnowtek.com/rpi/Raspberry-Pi-Systems-with-Yocto.html)
+- the manual of the [meta-raspberry-pi layer](https://meta-raspberrypi.readthedocs.io/en/latest/readme.html)
+
+Also, it might be helpful to check out specific parts of the docs, in particular
+
+**for writing code** (in `.conf` files, `.bbclass`es or recipes)
+- [how to write a new recipe](https://www.yoctoproject.org/docs/current/dev-manual/dev-manual.html#new-recipe-writing-a-new-recipe)
+- [an overview of the recipe syntax](https://www.yoctoproject.org/docs/current/dev-manual/dev-manual.html#recipe-syntax)
+- [details on the the recipe/task syntax](https://www.yoctoproject.org/docs/latest/bitbake-user-manual/bitbake-user-manual.html#bitbake-user-manual-metadata)
+- [variables in the recipe context](https://www.yoctoproject.org/docs/current/ref-manual/ref-manual.html#ref-varlocality-recipe-required)
+
+
+## General approaches / best practices
+
+One of Yocto's key concepts is the separation of functionality/configuration into layers. Upper 
+layers extend or override lower ones (with `.bbappend` files). In almost all cases, the basic 
+functionality provided by the standard poky layers *should not be changed* but instead customized 
+by *appending recipes*.
+
+For maintenance reasons, it is advisable to split custom functionality in relatively *small layers*. 
+It's a lot easier to point out where stuff breaks after an update of the core repositories if done so.
+
+There's also a *good to know* page by the Yocto Project, so check out [how we are meant to work with Yocto](https://www.yoctoproject.org/docs/what-i-wish-id-known/).
+
+
+## How specific tasks are solved
+
+### Configuration of enabled features from the 'outside' (of bitbake)
+
 **Approach**: Configuration happens through environment variables exported into the bitbake environment. 
-Each layer then appends to the IMAGE_INSTALL or DISTRO_FEATURES variables depending on the env vars. 
-*Known caveats*: No specific image is defined and some images may not include all indirect dependencies 
-(e.g. the core-image-minimal cannot host wifi features properly).
 
-## Basic principles
+Each layer then appends to the IMAGE_INSTALL or DISTRO_FEATURES variables or implements case logic 
+depending on the env vars.
 
-One of Yocto's key concepts is the separation of functionality/configuration 
-into layers. Upper layers extend or override lower ones (with `.bbappend` files). 
-The base functionality is usually provided by the core poky layers.
+*Known caveats*: Currently, no specific image is defined and some images may not include all necessary 
+indirect dependencies (e.g. the `core-image-minimal` cannot host wifi features properly). This is due to 
+the fact that the core images deal differently with the above mentioned variables.
 
-## General insights
 
-- [Bitbake beginner's tutorial](https://a4z.bitbucket.io/docs/BitBake/guide.html)
+## More insights 
 
-## Writing recipes
+### Writing recipes
 
-- [Documentation on recipes](https://www.yoctoproject.org/docs/current/dev-manual/dev-manual.html#new-recipe-writing-a-new-recipe)
-- [Recipe syntax](https://www.yoctoproject.org/docs/current/dev-manual/dev-manual.html#recipe-syntax)
-- [Detailed bitbake documentation of the recipe/task syntax](https://www.yoctoproject.org/docs/3.1/bitbake-user-manual/bitbake-user-manual.html#bitbake-user-manual-metadata)
-- [Variables in the recipe context](https://www.yoctoproject.org/docs/3.1/ref-manual/ref-manual.html#ref-varlocality-recipe-required)
-- Don't forget to include a package generated by a recipe (actually a `.bb` file) somewhere in your image, 
-  using `IMAGE_INSTALL_append = " <packageName> "`.
-- When defining licenses, you need to include a checksum:
+- Bitbake offers three options to write custom functionality: 
+  - shell functions - *quite limited syntax (as it's no bash), e.g. no arrays or the like, can be defined as tasks*
+  - bitbake-style python functions - *most python features available, easy access to the bitbake environment, can be defined as tasks*
+  - native python functions - *leverage full python syntax, but can't be tasks and need injection of the bitbake environment*
+- So far, either writing simple shell or bb-python function as tasks or using python for more complex 
+  tasks seems to work best
+- As there are no means to implement any logic in the recipes/conf files besides defining functions, conditional 
+  variable assignments need to use the **inline python syntax** (e.g. `MYVAR = "${@ 'fine' if d.getVar('IS_OK') == '1' else 'not fine' }`)
+- A package generated by a recipe (actually a `.bb` file) needs to be included somewhere in your image - using 
+  `IMAGE_INSTALL_append = " <packageName> "`.
+- When defining licenses, a checksum needs to be provided:
   ```
   LICENSE = "MIT"
   LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda2f7b4f302"
   ```
-- 
-
-## Writing tasks
-
-- Tasks can only be implemented as shell or Bitbake-style functions
 
 
-## Debugging and coping with errors
+### Writing tasks
+
+- Tasks can only be implemented as shell or bb-python functions
+
+
+### Debugging and coping with errors
 
 - Run `bitbake -e <command>` to get the environment dumped and `grep` for variables there
 - Check the `${WORKDIR}/temp` directory for log files (exists for all performed recipes/tasks)
@@ -46,7 +91,8 @@ The base functionality is usually provided by the core poky layers.
   and `build/sstate` folders, this should not increase build time of the next run too much.
 
 
-## Existing layers (for future extensions)
+
+## Existing layers (for potential future extensions)
 
 - https://layers.openembedded.org/layerindex/branch/master/layer/meta-docker/
 - https://layers.openembedded.org/layerindex/branch/master/layer/meta-readonly-rootfs-overlay/
@@ -54,7 +100,3 @@ The base functionality is usually provided by the core poky layers.
 - https://layers.openembedded.org/layerindex/branch/master/layer/meta-encrypted-storage/
 - https://layers.openembedded.org/layerindex/branch/master/layer/meta-selinux/
 
-## Special insights
-
-- Adding users/groups is significantly easier on the image level (with extrausers.bbclass) as 
-  compared to moving that into a separate recipe (with useradd.bbclass)
