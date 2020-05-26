@@ -10,7 +10,14 @@
 [[ -z "$BBPATH" ]] && echo_red "Error: Yocto build environment not initialized (oe-init-build-env should be called before)." && exit;
 
 # ------------------------
-# Writes the content of one or more config files ($1) into the build config file ($2)
+# Checks wether the provided path points to a regular conf file
+# ------------------------
+is_conf_file() {
+    [[ -f "$PROJECT_ROOT/conf/$1" ]] && echo 0 || echo 1
+}
+
+# ------------------------
+# Checks for existance and writes the content of one or more config files ($1) into the build config file ($2)
 # Appends to the file if $3 is provided and true.
 # Does not perform any checks and is meant for use here only.
 # ------------------------
@@ -20,7 +27,9 @@ write_conf() {
     # Enable several source configuration files to be passed in
     # and prepend the config folder
     for src in "${params[@]}"; do
-        srcs="$srcs $PROJECT_ROOT/conf/$src"
+        if [[ $(is_conf_file "$src") ]]; then
+            srcs="$srcs $PROJECT_ROOT/conf/$src"
+        fi
     done
     if [[ -z "$3" || "$3" = false ]]; then
         cat $srcs > $PROJECT_ROOT/build/conf/$2
@@ -28,13 +37,15 @@ write_conf() {
         cat $srcs >> $PROJECT_ROOT/build/conf/$2     
     fi
 }
-
 echo_orange "### Custom configuration ###"
 
 echo "You can customize the configuration by providing a config.yml file in the root folder. \
 It will be automatically loaded and all variables in it exported to the build environment."
-echo "For available options check out the layer desciptions. The only top level option set here \
-is the TARGET_MACHINE, selecting the hardware specific configurations (defaults to 'raspberrypi3')."
+echo "For available options check out the layer desciptions. The only top level options set here are: "
+echo " - TARGET_MACHINE, selecting the hardware specific configurations (defaults to 'raspberrypi3')"
+export TARGET_MACHINE=raspberrypi3
+echo " - UPDATE_ENABLED, controlling the update behavior (defaults to '1')"
+export UPDATE_ENABLED=1
 echo 
 
 # Try to locate .env script, export the variables and forward them to bitbake.
@@ -59,49 +70,48 @@ if [[ -f "$PROJECT_ROOT/config.yml" ]]; then
     fi
 fi
 
-# Configuration source path
-CONF="$PROJECT_ROOT/conf"
-
 # Make sure, the target machine configuration can be found
+TARGET_LAYERS="targets/$TARGET_MACHINE/layers"
+TARGET_CONF="targets/$TARGET_MACHINE/conf"
 NON_DEFAULT_TARGET=0
-if [[ ! -f "$CONF/targets/$TARGET_MACHINE/machine.conf" \
-      || ! -f "$CONF/targets/$TARGET_MACHINE/bblayers.append.conf" ]]; then
-    echo_red "Error: Could not find machine.conf or bblayers.append.conf for the specified target."
-    echo_yellow "Assuming a natively supported target and including 'meta-yocto-bsp'..."
+if [[ ! $(is_conf_file "$TARGET_LAYERS/bsp.conf") || ! $(is_conf_file "$TARGET_CONF/machine.conf") ]]; then
+    echo_red "Error: Could not find machine.conf or bsp.conf for the specified target."
+    echo_orange "Assuming a natively supported target and including 'meta-yocto-bsp'..."
     echo 
     NON_DEFAULT_TARGET=1
 fi
 
 echo "Generating Yocto config files in the build tree..."
 
-# Basic config
+# General configuration
 write_conf "bblayers.conf" "bblayers.conf"
 write_conf "local.conf" "local.conf"
 
-# Target settings
+# Target configuration
 if [ NON_DEFAULT_TARGET ]; then
-    write_conf "targets/$TARGET_MACHINE/bblayers.append.conf" "bblayers.conf" true
-    write_conf "targets/$TARGET_MACHINE/machine.conf" "local.conf" true 
+    write_conf "$TARGET_LAYERS/bsp.conf" "bblayers.conf" true
+    write_conf "$TARGET_CONF/machine.conf" "local.conf" true 
 else
     write_conf "targets/default.conf" "bblayers.conf" true
 fi
 
-# Adjustments according to imported configuration
+# Features
+# Debugging
+[[ "$DEBUG_ENABLED" = "1" ]] && write_conf "image/debug.conf" "local.conf" true;
 
-if [[ "$DEBUG_ENABLED" = "1" ]]; then
-    write_conf "image/debug.conf" "local.conf" true
+# Connectivity
+[[ "$WIFI_ENABLED" = "1" || "$BT_ENABLED" = "1" ]] && write_conf "layers/connectivity.conf" "bblayers.conf" true;
+[[ "$WIFI_ENABLED" = "1" ]] && write_conf "$TARGET_CONF/wifi.conf" "local.conf" true;
+
+# Firmware update
+if [[ "$UPDATE_ENABLED" = "1" ]]; then
+    write_conf "layers/fw-update.conf" "bblayers.conf" true
+    write_conf "$TARGET_LAYERS/fw-update.conf" "bblayers.conf" true
+    write_conf "$TARGET_CONF/fw-update.conf" "local.conf" true
 fi
 
-if [[ "$WIFI_ENABLED" = "1" || "$BT_ENABLED" = "1" ]]; then
-    write_conf "layers/connectivity.conf" "bblayers.conf" true
-fi
-if [[ "$WIFI_ENABLED" = "1" && -f "$CONF/targets/$TARGET_MACHINE/wifi.append.conf" ]]; then 
-    write_conf "targets/$TARGET_MACHINE/wifi.append.conf" "local.conf" true
-fi
-
-if [[ -n "$APP_CMAKE_URL" ]]; then
-    write_conf "layers/application.conf" "bblayers.conf" true
-fi
+# Application
+[[ -n "$APP_CMAKE_URL" ]] && write_conf "layers/application.conf" "bblayers.conf" true;
 
 echo 
 echo_green "### Custom configuration done. ###"

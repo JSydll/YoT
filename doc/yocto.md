@@ -47,7 +47,7 @@ There's also a *good to know* page by the Yocto Project, so check out [how we ar
 
 ### Configuration of enabled features from the 'outside' (of bitbake)
 
-**Approach**: Configuration happens through environment variables exported into the bitbake environment. 
+Configuration happens through environment variables exported into the bitbake environment. 
 
 Each layer then appends to the IMAGE_INSTALL or DISTRO_FEATURES variables or implements case logic 
 depending on the env vars.

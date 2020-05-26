@@ -19,7 +19,7 @@ target:
 ## General settings
 env:
   distro:
-    name: "YoT (Reference Distro)"
+    name: "YoT_Reference_Distro"
     version: "0.1"
   hostname: "yotbox"
   console:
@@ -52,6 +52,8 @@ bt:
 ssh:
   enabled: 1
   preinstalled_keys: "userone|/path/to/userone/key.pub"
+update:
+  enabled: 1
 
 ## Application
 app:

@@ -71,7 +71,7 @@ the images as well as some custom layers with additional functionality. Among th
   *Sets up users, groups and general system settings like hostname or keyboard layout.*
 - `meta-connectivity` ([doc](src/meta-connectivity/Readme.md))
   *Connectivity related features like compile-time network/wifi configuration or ssh setup.*
-- `meta-fota` ([doc](src/meta-fota/Readme.md))
+- `meta-fw-update` ([doc](src/meta-fw-update/Readme.md))
   *Adds update related functionalities to the image.*
 - `meta-hardening` ([doc](src/meta-hardening/Readme.md))
   *Extends/configures the security layer to provide a secure system.*
