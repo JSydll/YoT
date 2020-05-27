@@ -73,6 +73,8 @@ the images as well as some custom layers with additional functionality. Among th
   *Connectivity related features like compile-time network/wifi configuration or ssh setup.*
 - `meta-fw-update` ([doc](src/meta-fw-update/Readme.md))
   *Adds update related functionalities to the image.*
+- `meta-fw-update-raspberrypi` ([doc](src/meta-fw-update-raspberrypi/Readme.md)
+  *Implements target specific configuration for firmware update.*
 - `meta-hardening` ([doc](src/meta-hardening/Readme.md))
   *Extends/configures the security layer to provide a secure system.*
 - `meta-application` ([doc](src/meta-application/Readme.md))

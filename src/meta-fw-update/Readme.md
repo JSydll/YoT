@@ -20,3 +20,13 @@ Three main tasks need to be done:
 Some parts of these tasks can be generalized (mostly using file templates or generating files during build) 
 which is the main goal of this layer. Others depend on the target (like partitioning by providing a wks file) 
 hence need to be implemented in a distinct `meta-fw-update-<machine>` layer.
+
+## Configuring U-Boot
+
+`meta-swupdate` comes with a recipe to make sure proper binaries of U-Boot are installed and environment 
+variables can be passed to it (`libubootenv`). In this layer, the installation of a configuration file is 
+performed, expecting actual configuration to happen in the target specific layer again.
+
+## Partitioning
+
+Expected: p2 and p3 are rootfs partitions

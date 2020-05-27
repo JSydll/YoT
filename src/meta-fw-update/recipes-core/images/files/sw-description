@@ -1,0 +1,55 @@
+software =
+{
+	version = "%%UPDATE_IMAGE_VERSION%%";
+
+	raspberrypi3 = {
+		hardware-compatibility: [ "%%UPDATE_IMAGE_HWCOMPAT%%" ];
+		stable : {
+			copy1 : {
+				images: (
+					{
+						filename = "%%UPDATE_IMAGE_FILENAME%%.ext4.gz";
+						type = "raw";
+						compressed = true;
+						device = "%%UPDATE_MEM_DEVICE%%p2";
+					}
+				);
+				scripts: (
+					{
+						filename = "install.lua";
+						type = "lua";
+					}
+				);
+                uboot: (
+                    {
+                        name = "fw_part";
+                        value = "2";
+                    }
+				);
+
+			};
+			copy2 : {
+				images: (
+					{
+						filename = "%%UPDATE_IMAGE_VERSION%%.ext4.gz";
+						type = "raw";
+						compressed = true;
+						device = "%%UPDATE_MEM_DEVICE%%p3";
+					}
+				);
+				scripts: (
+					{
+						filename = "install.lua";
+						type = "lua";
+					}
+				);
+                uboot: (
+                    {
+                        name = "fw_part";
+                        value = "3";
+                    }
+				);
+			};
+		};
+	}
+}

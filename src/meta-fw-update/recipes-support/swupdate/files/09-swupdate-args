@@ -1,0 +1,23 @@
+rootfs=`mount | grep "on / type" | cut -d':' -f 2 | cut -d' ' -f 1`
+
+if [ $rootfs =~ 'p2' ]; then
+	selection="-e stable,copy2"
+else
+	selection="-e stable,copy1"
+fi
+
+state=`fw_printenv ustate | cut -f 2 -d'='`
+if [ $state == 1 ]; then
+	SWUPDATE_SURICATTA_ARGS="-c 2"
+else
+	SWUPDATE_SURICATTA_ARGS=" "
+fi
+
+# Try to locate the swupdate.cfg either in an overlay location or in r/w rootfs
+if [ -e %%ROOTFS_OVERLAY_PATH%%/swupdate.cfg ]; then
+	CFGFILE="%%ROOTFS_OVERLAY_PATH%%/swupdate.cfg"
+else
+	CFGFILE="/etc/swupdate.cfg"
+fi
+
+SWUPDATE_ARGS="-H %%IDENTITY_NAME%%:%%IDENTITY_VERSION%% ${selection} -f ${CFGFILE}"
