@@ -12,6 +12,9 @@ For simplicity, this layer only implements the A/B schema.
 As one of the well documented and maintained update solutions is sbabic's **`swupdate`**, this layer 
 builds on top of it.
 
+**Documentation for sbabic's `swupdate` can be found [here](https://sbabic.github.io/swupdate/overview.html)**. 
+The overview also makes up a great introduction into the concepts of embedded firmware updates.
+
 Three main tasks need to be done:
 - Creating an image with the correct partitioning layout
 - Preparing the target to use U-Boot and specific bootloader env vars
@@ -29,4 +32,12 @@ performed, expecting actual configuration to happen in the target specific layer
 
 ## Partitioning
 
-Expected: p2 and p3 are rootfs partitions
+The partitioning itself needs to be done in a target specific layer as memory devices and layouts differ from 
+platform to platform. Here it is expected that the image features two rootfs partitions (namely p2 and p3) as 
+the A/B slots.
+
+## Resources
+
+Almost all code is taken from the [RaspberryPi 3 example by the swupdate developers](https://github.com/sbabic/meta-swupdate-boards), 
+with a bit more documentation, some minor enhancements and a restructuring into two layers differentiating 
+between general `swupdate` configuration and target specific operations.

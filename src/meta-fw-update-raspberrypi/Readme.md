@@ -36,4 +36,6 @@ p4 - media (overlayfs)
 
 ## Resources
 
-Almost all code is taken from the [RaspberryPi 3 example by the swupdate developers](https://github.com/sbabic/meta-swupdate-boards)
+Almost all code is taken from the [RaspberryPi 3 example by the swupdate developers](https://github.com/sbabic/meta-swupdate-boards), 
+with a bit more documentation, some minor enhancements and a restructuring into two layers differentiating 
+between general `swupdate` configuration and target specific operations.
