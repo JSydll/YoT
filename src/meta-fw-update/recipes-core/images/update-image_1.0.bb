@@ -12,15 +12,15 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda
 inherit swupdate
 
 SRC_URI = "\
-    file://emmcsetup.lua \
+    file://install.lua \
     file://sw-description \
 "
 
 # Image to build before the swupdate image and to include in the .swu image
-IMAGE_DEPENDS = "${UPDATE_IMAGE_BASE}"
-SWUPDATE_IMAGES = "${UPDATE_IMAGE_BASE}"
+IMAGE_DEPENDS = "core-image-base"
 
-SWUPDATE_IMAGES_FSTYPES += ".ext4.gz"
+SWUPDATE_IMAGES = "core-image-base"
+SWUPDATE_IMAGES_FSTYPES[core-image-base] = ".ext4.gz"
 
 # Use the preplace class to patch template source files
 inherit preplace
