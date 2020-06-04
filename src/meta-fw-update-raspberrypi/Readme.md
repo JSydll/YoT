@@ -24,14 +24,15 @@ the target is provided.
 ## Creating a partition layout
 
 A common security practice is to hide the rootfs from the user by only exposing certain parts of it, 
-using an overlay. Therefore, the rootfs itself *should be read-only* by default.
+using an overlay. Therefore, the rootfs itself *should be read-only* by default. 
 
 Expected partition layout (needed by `meta-fw-update`):
 ```
 p1 - boot
-p2 - rootfs copy1
-p3 - rootfs copy2
-p4 - media (overlayfs)
+p2 - rootfs copy1 [r/o squashfs]
+p3 - rootfs copy2 [r/o squashfs]
+p4 - system (mount point for overlayfs) [r/w ext4]
+p5 - data (user/application data) [r/w ext4]
 ```
 
 ## Resources

@@ -43,9 +43,7 @@ It's a lot easier to point out where stuff breaks after an update of the core re
 There's also a *good to know* page by the Yocto Project, so check out [how we are meant to work with Yocto](https://www.yoctoproject.org/docs/what-i-wish-id-known/).
 
 
-## How specific tasks are solved
-
-### Configuration of enabled features from the 'outside' (of bitbake)
+## Configuration of enabled features from the 'outside' (of bitbake)
 
 Configuration happens through environment variables exported into the bitbake environment. 
 
@@ -57,9 +55,7 @@ indirect dependencies (e.g. the `core-image-minimal` cannot host wifi features p
 the fact that the core images deal differently with the above mentioned variables.
 
 
-## More insights 
-
-### Writing recipes
+## Writing recipes
 
 - Bitbake offers three options to write custom functionality: 
   - shell functions - *quite limited syntax (as it's no bash), e.g. no arrays or the like, can be defined as tasks*
@@ -78,12 +74,35 @@ the fact that the core images deal differently with the above mentioned variable
   ```
 
 
-### Writing tasks
+## Writing tasks
 
 - Tasks can only be implemented as shell or bb-python functions
 
 
-### Debugging and coping with errors
+## (Partitioned) images
+
+Per default, Yocto generates artifacts for all image types defined in the `IMAGE_FSTYPES` variable. Usually, the resulting 
+files are binary representations of a single filesystem like `ext4` or `squashfs`. To deploy these as rootfs to a target, 
+they need to be accompanied by a bootloader, the kernel and optionally other data partitions, bringing up the need for 
+partitioning the target media (eMMC, Flash, SD card, ...).
+
+**Partitioned images can be generated in two ways**:
+- Providing a custom image type inheriting from the `image_types` class 
+  (an example for this approach is the `sdcard_image-rpi.bbclass` provided by `meta-raspberrypi`).
+- Providing a `.wks` (wic kickstarter) file for building the image with the `wic` tool.
+
+An overview of the `wic` tool can be found 
+[in the Yocto Dev Manual here](https://www.yoctoproject.org/docs/current/dev-manual/dev-manual.html#creating-partitioned-images-using-wic). 
+The basic idea is to have `wic` scanning an already completed build of a target (e.g. `core-image-base`), partitioning 
+a new image according to the commands in the `.wks` file and populating it with the build artifacts from the target. 
+Of course, this is only applicable if the features provided by `wic` suffice to create a fully functional image, i.e. 
+no special configuration of the partitions or the rootfs needs to be done.
+
+Implementing a custom image type offers full flexibility for the creation of partitions and filesystems, however it also 
+requires knowledge about the native commands also used when manually partitioning a memory device in Linux.
+
+
+## Debugging and coping with errors
 
 - Run `bitbake -e <command>` to get the environment dumped and `grep` for variables there
 - Check the `${WORKDIR}/temp` directory for log files (exists for all performed recipes/tasks)
