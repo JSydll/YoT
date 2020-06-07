@@ -86,10 +86,10 @@ files are binary representations of a single filesystem like `ext4` or `squashfs
 they need to be accompanied by a bootloader, the kernel and optionally other data partitions, bringing up the need for 
 partitioning the target media (eMMC, Flash, SD card, ...).
 
-**Partitioned images can be generated in two ways**:
-- Providing a custom image type inheriting from the `image_types` class 
-  (an example for this approach is the `sdcard_image-rpi.bbclass` provided by `meta-raspberrypi`).
-- Providing a `.wks` (wic kickstarter) file for building the image with the `wic` tool.
+There are two ways to generate partitioned images: the **old way** (as of before the introduction of the `wic` tool) is to 
+provide a **custom image type** inheriting from the `image_types` class and using standard Linux tools like `parted` to do 
+the partitioning 'by hand'. An example for this approach is the `sdcard_image-rpi.bbclass` provided by `meta-raspberrypi`). 
+The **new way** is to create a `.wks` (wic kickstarter) file for building the image with the `wic` tool.
 
 An overview of the `wic` tool can be found 
 [in the Yocto Dev Manual here](https://www.yoctoproject.org/docs/current/dev-manual/dev-manual.html#creating-partitioned-images-using-wic). 
@@ -100,6 +100,8 @@ no special configuration of the partitions or the rootfs needs to be done.
 
 Implementing a custom image type offers full flexibility for the creation of partitions and filesystems, however it also 
 requires knowledge about the native commands also used when manually partitioning a memory device in Linux.
+
+Here, image generation should be simplified as much as possible - therefore images will be created using `wic`.
 
 
 ## Debugging and coping with errors

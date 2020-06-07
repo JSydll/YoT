@@ -113,6 +113,14 @@ fi
 # Application
 [[ -n "$APP_CMAKE_URL" ]] && write_conf "layers/application.conf" "bblayers.conf" true;
 
+# Image generation
+[[ "$IMAGE_MEM_DEVICE" != "mmc" ]] && echo_red "Creating images for '$IMAGE_MEM_DEVICE' is currently not supported." && exit 
+if [[ "$UPDATE_ENABLED" = "1" && "$UPDATE_MODE" = "dual-copy" ]]; then
+    write_conf "image/secure-dual-copy-$IMAGE_MEM_DEVICE.conf" "local.conf" true
+else 
+    write_conf "image/secure-base-$IMAGE_MEM_DEVICE.conf" "local.conf" true
+fi
+
 echo 
 echo_green "### Custom configuration done. ###"
 echo 

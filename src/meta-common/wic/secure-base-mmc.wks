@@ -1,0 +1,7 @@
+# short-description: Creates a secured, partitioned base MMC image
+# long-description: Image with one read-only rootfs partition and one writable 
+# overlay.
+
+part /boot --source bootimg-partition --ondisk mmcblk0 --fstype=vfat --label boot --active --align 4096 --size 20
+part / --source rootfs --ondisk mmcblk0 --fstype=ext4 --label root --align 4096
+part --ondisk mmcblk0 --fstype=ext4 --label system --align 4096 --size 1G 

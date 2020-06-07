@@ -1,0 +1,9 @@
+# short-description: Creates a partitioned image for secure dual copy updates
+# long-description: Image with two read-only rootfs partitions, one writable 
+# overlay and one writable data partition.
+
+part /boot --source bootimg-partition --ondisk mmcblk0 --fstype=vfat --label boot --active --align 4096 --size 20
+part / --source rootfs --ondisk mmcblk0 --fstype=ext4 --label root --align 4096
+part --source rootfs --ondisk mmcblk0 --fstype=ext4 --label root2 --align 4096
+part --ondisk mmcblk0 --fstype=ext4 --label system --align 4096 --size 1G 
+part /data --ondisk mmcblk0 --fstype=ext4 --label data --align 4096 --size 2G --fsoptions sync
